@@ -1,0 +1,1464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Page Monitor - Change Report 2026-03-08</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif;
+    background: #0d1117;
+    color: #c9d1d9;
+    line-height: 1.6;
+    padding: 0;
+  }
+  .container { max-width: 100%; padding: 24px 40px; }
+  h1 {
+    font-size: 28px;
+    color: #58a6ff;
+    border-bottom: 1px solid #30363d;
+    padding-bottom: 16px;
+    margin-bottom: 24px;
+  }
+  h2 {
+    font-size: 20px;
+    color: #f0f6fc;
+    margin-top: 32px;
+    margin-bottom: 12px;
+    padding: 8px 12px;
+    background: #161b22;
+    border-left: 3px solid #58a6ff;
+    border-radius: 4px;
+  }
+  .stats {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+  }
+  .stat-card {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 8px;
+    padding: 16px 24px;
+    min-width: 160px;
+  }
+  .stat-card .number { font-size: 32px; font-weight: 700; }
+  .stat-card .label { font-size: 13px; color: #8b949e; text-transform: uppercase; }
+  .stat-green .number { color: #3fb950; }
+  .stat-yellow .number { color: #d29922; }
+  .stat-red .number { color: #f85149; }
+  .stat-blue .number { color: #58a6ff; }
+  .diff-block {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    overflow: hidden;
+  }
+  .diff-header {
+    padding: 10px 16px;
+    background: #1c2128;
+    border-bottom: 1px solid #30363d;
+    font-size: 13px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .diff-header a {
+    color: #58a6ff;
+    text-decoration: none;
+    word-break: break-all;
+  }
+  .diff-header a:hover { text-decoration: underline; }
+  .diff-body { padding: 12px 16px; font-size: 13px; font-family: 'SF Mono', 'Fira Code', monospace; }
+  .diff-add {
+    background: rgba(63, 185, 80, 0.15);
+    color: #3fb950;
+    padding: 2px 8px;
+    display: block;
+    border-left: 3px solid #3fb950;
+    margin: 2px 0;
+  }
+  .diff-remove {
+    background: rgba(248, 81, 73, 0.15);
+    color: #f85149;
+    padding: 2px 8px;
+    display: block;
+    border-left: 3px solid #f85149;
+    margin: 2px 0;
+  }
+  .diff-context {
+    color: #8b949e;
+    padding: 2px 8px;
+    display: block;
+    margin: 2px 0;
+  }
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+  .badge-new { background: #1f6feb33; color: #58a6ff; }
+  .badge-ok { background: #23863533; color: #3fb950; }
+  .badge-warn { background: #bb800926; color: #d29922; }
+  .badge-error { background: #f8514926; color: #f85149; }
+  .domain-group { margin-bottom: 32px; }
+  .timestamp { color: #8b949e; font-size: 14px; margin-bottom: 24px; }
+  table { width: 100%; border-collapse: collapse; margin: 8px 0; }
+  th { text-align: left; padding: 8px 12px; background: #1c2128; color: #8b949e; font-size: 12px; text-transform: uppercase; border-bottom: 1px solid #30363d; }
+  td { padding: 8px 12px; border-bottom: 1px solid #21262d; font-size: 13px; }
+  td a { color: #58a6ff; text-decoration: none; }
+  td a:hover { text-decoration: underline; }
+  .note { background: #1c2128; border: 1px solid #30363d; border-radius: 8px; padding: 16px; margin: 16px 0; color: #8b949e; font-size: 13px; }
+</style>
+</head>
+<body>
+<div class="container">
+<h1>ð Page Change Monitor Report</h1>
+<p class="timestamp">Generated: 2026-03-08 &mdash; Baseline scan (first run)</p>
+
+<div class="stats">
+  <div class="stat-card stat-blue">
+    <div class="number">168</div>
+    <div class="label">Total URLs</div>
+  </div>
+  <div class="stat-card stat-green">
+    <div class="number">12</div>
+    <div class="label">Content OK</div>
+  </div>
+  <div class="stat-card stat-yellow">
+    <div class="number">147</div>
+    <div class="label">Minimal Content</div>
+  </div>
+  <div class="stat-card stat-red">
+    <div class="number">9</div>
+    <div class="label">Unreachable</div>
+  </div>
+</div>
+
+<div class="note">
+<strong>â¹ï¸ First Run â Baseline Established</strong><br>
+This is the initial scan. All page content has been captured as the baseline snapshot. 
+Future runs will compare against these snapshots and highlight changes using diff formatting:
+<br><br>
+<span class="diff-add">+ Added content will appear in green</span>
+<span class="diff-remove">- Removed content will appear in red</span>
+<span class="diff-context">&nbsp; Unchanged context lines in grey</span>
+</div>
+
+<div class="domain-group">
+<h2>other <span style="font-size:13px;color:#8b949e;font-weight:normal;">(168 pages)</span></h2>
+<table>
+<thead><tr><th>URL</th><th>Status</th><th>Content Size</th><th>Hash</th></tr></thead>
+<tbody>
+<tr>
+  <td><a href="https://www.eklohotels.com/fr/ekloresponsable" target="_blank">www.eklohotels.com/fr/ekloresponsable</a></td>
+  <td><span class="badge badge-ok">OK</span></td>
+  <td>650 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">650_60270</td>
+</tr>
+<tr>
+  <td><a href="https://www.eklohotels.com/fr/recrutement" target="_blank">www.eklohotels.com/fr/recrutement</a></td>
+  <td><span class="badge badge-ok">OK</span></td>
+  <td>650 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">650_60270</td>
+</tr>
+<tr>
+  <td><a href="https://www.welcometothejungle.com/fr/companies/eklo-hotels/rse" target="_blank">www.welcometothejungle.com/fr/companies/eklo-hotels/rse</a></td>
+  <td><span class="badge badge-ok">OK</span></td>
+  <td>5416 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">5416_687394</td>
+</tr>
+<tr>
+  <td><a href="https://www.bestwestern.fr/market-sobriete.jsp" target="_blank">www.bestwestern.fr/market-sobriete.jsp</a></td>
+  <td><span class="badge badge-ok">OK</span></td>
+  <td>5335 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">5335_626643</td>
+</tr>
+<tr>
+  <td><a href="https://www.bestwestern.com/fr_FR/about/better-world.html" target="_blank">www.bestwestern.com/fr_FR/about/better-world.html</a></td>
+  <td><span class="badge badge-ok">OK</span></td>
+  <td>3258 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">3258_349082</td>
+</tr>
+<tr>
+  <td><a href="https://bwhhotels.fr/nos-engagements/" target="_blank">bwhhotels.fr/nos-engagements/</a></td>
+  <td><span class="badge badge-error">Empty</span></td>
+  <td>â</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">â</td>
+</tr>
+<tr>
+  <td><a href="https://www.bwhhotels.com/content/bwh-hotels/en_US/about/earth-people-community.html" target="_blank">www.bwhhotels.com/content/bwh-hotels/en_US/about/earth-people-community.html</a></td>
+  <td><span class="badge badge-ok">OK</span></td>
+  <td>7190 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">7190_728643</td>
+</tr>
+<tr>
+  <td><a href="https://sustainability.bestwestern.de/en/" target="_blank">sustainability.bestwestern.de/en/</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>13 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">13_1092</td>
+</tr>
+<tr>
+  <td><a href="https://bwhhotels.fr/nos-actions-et-projets/" target="_blank">bwhhotels.fr/nos-actions-et-projets/</a></td>
+  <td><span class="badge badge-error">Empty</span></td>
+  <td>â</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">â</td>
+</tr>
+<tr>
+  <td><a href="https://bwhhotels.fr/notre-action-climatique/" target="_blank">bwhhotels.fr/notre-action-climatique/</a></td>
+  <td><span class="badge badge-error">Empty</span></td>
+  <td>â</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">â</td>
+</tr>
+<tr>
+  <td><a href="https://bwhhotels.fr/developpement_durable/" target="_blank">bwhhotels.fr/developpement_durable/</a></td>
+  <td><span class="badge badge-error">Empty</span></td>
+  <td>â</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">â</td>
+</tr>
+<tr>
+  <td><a href="https://www.bestwestern.fr/landing_pages/sejour-responsable" target="_blank">www.bestwestern.fr/landing_pages/sejour-responsable</a></td>
+  <td><span class="badge badge-ok">OK</span></td>
+  <td>12411 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">12411_1310508</td>
+</tr>
+<tr>
+  <td><a href="https://www.honotel.com/rse/" target="_blank">www.honotel.com/rse/</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.honotel.com/happyculture/" target="_blank">www.honotel.com/happyculture/</a></td>
+  <td><span class="badge badge-ok">OK</span></td>
+  <td>20061 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">20061_2810530</td>
+</tr>
+<tr>
+  <td><a href="https://www.happyculture.com/fr/nos-engagements.html" target="_blank">www.happyculture.com/fr/nos-engagements.html</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.honotel.com/happyculture-lance-sa-chaine-youtube-happyculture-academie/" target="_blank">www.honotel.com/happyculture-lance-sa-chaine-youtube-happyculture-academie/</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.happyculture.com/event-article/fr/decouvrez-limpact-environnemental-dune-nuit-passee-a-lhotel/" target="_blank">www.happyculture.com/event-article/fr/decouvrez-limpact-environnemental-dune-nui</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.okkohotels.com/fr/page/notre-engagement.18808.html#:~:text=%22Concevoir%20des%20lieux%20qui%20font" target="_blank">www.okkohotels.com/fr/page/notre-engagement.18808.html#:~:text=%22Concevoir%20de</a></td>
+  <td><span class="badge badge-error">Empty</span></td>
+  <td>â</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">â</td>
+</tr>
+<tr>
+  <td><a href="https://www.okkohotels.com/fr/page/notre-engagement.18808.html" target="_blank">www.okkohotels.com/fr/page/notre-engagement.18808.html</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.okkohotels.com/fr/page/okko-hotels-accessibilite-handicape.5439.html" target="_blank">www.okkohotels.com/fr/page/okko-hotels-accessibilite-handicape.5439.html</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.okkohotels.com/fr/page/rejoignez-laventure.18745.html" target="_blank">www.okkohotels.com/fr/page/rejoignez-laventure.18745.html</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://bbhotels-group.com/fr/rapports-et-certifications/" target="_blank">bbhotels-group.com/fr/rapports-et-certifications/</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://bbhotels-group.com/fr/strategie-rse/" target="_blank">bbhotels-group.com/fr/strategie-rse/</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://bbhotels-group.com/fr/donner-a-tous-les-moyens-dagir/" target="_blank">bbhotels-group.com/fr/donner-a-tous-les-moyens-dagir/</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://bbhotels-group.com/fr/sadapter-a-notre-environnement/" target="_blank">bbhotels-group.com/fr/sadapter-a-notre-environnement/</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://bbhotels-group.com/fr/innover-ensemble/" target="_blank">bbhotels-group.com/fr/innover-ensemble/</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://bbhotels-group.com/fr/notre-certification/" target="_blank">bbhotels-group.com/fr/notre-certification/</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://bbhome-group.com/nos-pilliers-3/" target="_blank">bbhome-group.com/nos-pilliers-3/</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://bbhotels-group.com/fr/bb-hotels-the-first-hotel-chain-certified-on-sustainability-anglais/" target="_blank">bbhotels-group.com/fr/bb-hotels-the-first-hotel-chain-certified-on-sustainabilit</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.hotel-bb.com/en/bb-hotels-responsible-and-sustainable-company" target="_blank">www.hotel-bb.com/en/bb-hotels-responsible-and-sustainable-company</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.hotel-bb.com/en/our-csr-commitment" target="_blank">www.hotel-bb.com/en/our-csr-commitment</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.hotel-bb.com/fr/environnement/partenaires-durables" target="_blank">www.hotel-bb.com/fr/environnement/partenaires-durables</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.hotel-bb.com/en/bb-hotels-we-want-sustainability-be-accessible-everyone" target="_blank">www.hotel-bb.com/en/bb-hotels-we-want-sustainability-be-accessible-everyone</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://bbhotels-group.com/fr/notre-site-web-eco-concu/" target="_blank">bbhotels-group.com/fr/notre-site-web-eco-concu/</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.hotel-bb.com/fr/bb-home" target="_blank">www.hotel-bb.com/fr/bb-home</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.brithotel.fr/producteurs-locaux" target="_blank">www.brithotel.fr/producteurs-locaux</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.brithotel.fr/labels-certifications" target="_blank">www.brithotel.fr/labels-certifications</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.brithotel.fr/environnement" target="_blank">www.brithotel.fr/environnement</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.brithotel.fr/la-charte-rse-brit-hotel-c289.html" target="_blank">www.brithotel.fr/la-charte-rse-brit-hotel-c289.html</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.contact-hotel.com/planete-contact.htm" target="_blank">www.contact-hotel.com/planete-contact.htm</a></td>
+  <td><span class="badge badge-ok">OK</span></td>
+  <td>104 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">104_9271</td>
+</tr>
+<tr>
+  <td><a href="https://www.contact-hotel.com/decouvrir/qui-sommes-nous/" target="_blank">www.contact-hotel.com/decouvrir/qui-sommes-nous/</a></td>
+  <td><span class="badge badge-ok">OK</span></td>
+  <td>104 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">104_9271</td>
+</tr>
+<tr>
+  <td><a href="https://www.contact-hotel.info/pourquoi-nous-rejoindre.html" target="_blank">www.contact-hotel.info/pourquoi-nous-rejoindre.html</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.staycitylive.com/sustainability?_gl=1*jrmkl5*_ga*MTUzMzk4Njk4OC4xNzU5OTMxNDk3*_ga_1CP309JWB2*czE3NTk5MzE0OTckbzEkZzEkdDE3NTk5MzE2NTUkajIxJGwwJGgxNTAxNzI5OTk3*_gcl_au*MTk4MDA0NjQzNC4xNzU5OTMxNjE2*FPAU*MTk4MDA0NjQzNC4xNzU5OTMxNjE2" target="_blank">www.staycitylive.com/sustainability?_gl=1*jrmkl5*_ga*MTUzMzk4Njk4OC4xNzU5OTMxNDk</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.staycity.com/sustainability" target="_blank">www.staycity.com/sustainability</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://vvf.asso.fr/le-groupe-associatif-vvf/organisation/" target="_blank">vvf.asso.fr/le-groupe-associatif-vvf/organisation/</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.vvf.fr/vvf-qui-sommes-nous.html" target="_blank">www.vvf.fr/vvf-qui-sommes-nous.html</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.vvf.fr/economie-sociale-solidaire-et-responsabilite-societale-entreprises.html" target="_blank">www.vvf.fr/economie-sociale-solidaire-et-responsabilite-societale-entreprises.ht</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://vvf.asso.fr/developpement-durable-rse/" target="_blank">vvf.asso.fr/developpement-durable-rse/</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://vvfingenierie.fr/2022/06/analyse/journee-mondiale-tourisme-responsable-voyager-bas-carbone/" target="_blank">vvfingenierie.fr/2022/06/analyse/journee-mondiale-tourisme-responsable-voyager-b</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://vvf.asso.fr/employeur-responsable/" target="_blank">vvf.asso.fr/employeur-responsable/</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.vvf.fr/villages-vacances-accessibles-handicap.html" target="_blank">www.vvf.fr/villages-vacances-accessibles-handicap.html</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.vvf.fr/top-10-destinations-vvf-vacances-sans-voiture.html" target="_blank">www.vvf.fr/top-10-destinations-vvf-vacances-sans-voiture.html</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.vvf.fr/vacances-idees-activites-ecologiques.html" target="_blank">www.vvf.fr/vacances-idees-activites-ecologiques.html</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.vvf.fr/conseils-vacances-eco-responsables/vacances-zero-carbone.html" target="_blank">www.vvf.fr/conseils-vacances-eco-responsables/vacances-zero-carbone.html</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.vvf.fr/economie-sociale-solidaire-et-responsabilite-societale-entreprises/vacances-ecologiques.html" target="_blank">www.vvf.fr/economie-sociale-solidaire-et-responsabilite-societale-entreprises/va</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://vvf.asso.fr/" target="_blank">vvf.asso.fr/</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.vvf.fr/evasion-handicap-famille.html" target="_blank">www.vvf.fr/evasion-handicap-famille.html</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.vvf.fr/les-vacances-des-heros.html" target="_blank">www.vvf.fr/les-vacances-des-heros.html</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://vvf.asso.fr/portfolio-items/programmeasy-org/" target="_blank">vvf.asso.fr/portfolio-items/programmeasy-org/</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.vvf.fr/economie-sociale-solidaire-et-responsabilite-societale-entreprises/" target="_blank">www.vvf.fr/economie-sociale-solidaire-et-responsabilite-societale-entreprises/</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://vvf.asso.fr/employeur-responsable/culture/" target="_blank">vvf.asso.fr/employeur-responsable/culture/</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://vvf.asso.fr/employeur-responsable/metiers/" target="_blank">vvf.asso.fr/employeur-responsable/metiers/</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.vvf.fr/hoali-gourde-friendly.html" target="_blank">www.vvf.fr/hoali-gourde-friendly.html</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.vvf.fr/dorloteurs-abeilles.html" target="_blank">www.vvf.fr/dorloteurs-abeilles.html</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.vvf.fr/vvf-recrutement.html" target="_blank">www.vvf.fr/vvf-recrutement.html</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.belambra.fr/developpement-durable-belambra" target="_blank">www.belambra.fr/developpement-durable-belambra</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://recrute.belambra.fr/pages/belambra-s-engage" target="_blank">recrute.belambra.fr/pages/belambra-s-engage</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.belambra.fr/charte-de-confiance-belambra" target="_blank">www.belambra.fr/charte-de-confiance-belambra</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.belambra.fr/destinations/mediterranee/activites-ecologiques-enfants-belambra-wwf-mediterranee" target="_blank">www.belambra.fr/destinations/mediterranee/activites-ecologiques-enfants-belambra</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.belambra.fr/engagements" target="_blank">www.belambra.fr/engagements</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.belambra.fr/index-de-l-egalite-femmes-hommes" target="_blank">www.belambra.fr/index-de-l-egalite-femmes-hommes</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.belambra.fr/engagements/eco-gestes" target="_blank">www.belambra.fr/engagements/eco-gestes</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.azureva-vacances.com/fr/a-propos-d-azureva/" target="_blank">www.azureva-vacances.com/fr/a-propos-d-azureva/</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.azureva-vacances.com/fr/destinations/" target="_blank">www.azureva-vacances.com/fr/destinations/</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://carrieres.azureva-vacances.com/" target="_blank">carrieres.azureva-vacances.com/</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://issuu.com/vtf-lespritvacances" target="_blank">issuu.com/vtf-lespritvacances</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.vtf-vacances.com/fr_FR/espace-presse" target="_blank">www.vtf-vacances.com/fr_FR/espace-presse</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.vtf-vacances.com/fr_FR/brochures" target="_blank">www.vtf-vacances.com/fr_FR/brochures</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.vtf-vacances.com/media/cms/file/charte-environnementale-2022-2-pages.pdf" target="_blank">www.vtf-vacances.com/media/cms/file/charte-environnementale-2022-2-pages.pdf</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.vtf-vacances.com/fr_FR/nos-engagements" target="_blank">www.vtf-vacances.com/fr_FR/nos-engagements</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.vtf-vacances.com/fr_FR/qui-sommes-nous" target="_blank">www.vtf-vacances.com/fr_FR/qui-sommes-nous</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://groupes.vtf-vacances.com/engagements/tourisme-responsable/" target="_blank">groupes.vtf-vacances.com/engagements/tourisme-responsable/</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.vtf-vacances.com/fr_FR/sejours-cyclotourisme" target="_blank">www.vtf-vacances.com/fr_FR/sejours-cyclotourisme</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.vtf-vacances.com/fr_FR/aides-aux-vacances" target="_blank">www.vtf-vacances.com/fr_FR/aides-aux-vacances</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.calameo.com/subscriptions/6430898" target="_blank">www.calameo.com/subscriptions/6430898</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.pierreval.com/le-groupe-pierreval/rse-groupe-pierreval/" target="_blank">www.pierreval.com/le-groupe-pierreval/rse-groupe-pierreval/</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.pierreval.com/nos-engagements/" target="_blank">www.pierreval.com/nos-engagements/</a></td>
+  <td><span class="badge badge-ok">OK</span></td>
+  <td>9785 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">9785_1324936</td>
+</tr>
+<tr>
+  <td><a href="https://www.pierreval.com/le-groupe-pierreval/nous-rejoindre/" target="_blank">www.pierreval.com/le-groupe-pierreval/nous-rejoindre/</a></td>
+  <td><span class="badge badge-ok">OK</span></td>
+  <td>2491 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">2491_286503</td>
+</tr>
+<tr>
+  <td><a href="https://www.mmv.fr/destinations-label-clef-verte" target="_blank">www.mmv.fr/destinations-label-clef-verte</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.mmv.fr/notre-concept" target="_blank">www.mmv.fr/notre-concept</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.mmv.fr/3-2-1-action" target="_blank">www.mmv.fr/3-2-1-action</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://makeamove.fr/edelweiss-2030-transformation-et-engagement-de-mmv/" target="_blank">makeamove.fr/edelweiss-2030-transformation-et-engagement-de-mmv/</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://recrutement.mmv.fr/fr" target="_blank">recrutement.mmv.fr/fr</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.mmv.fr/brochures" target="_blank">www.mmv.fr/brochures</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.residhotel.com/la-rse-au-sein-du-groupe-residhotel/" target="_blank">www.residhotel.com/la-rse-au-sein-du-groupe-residhotel/</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.zenitude-hotel-residences.com/nos-engagements/" target="_blank">www.zenitude-hotel-residences.com/nos-engagements/</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://nemea-groupe.com/nos-engagements/" target="_blank">nemea-groupe.com/nos-engagements/</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://greet.accor.com/lhospitalite-positive/" target="_blank">greet.accor.com/lhospitalite-positive/</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://group.accor.com/fr/documents-publications" target="_blank">group.accor.com/fr/documents-publications</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.premiereclasse.com/fr-fr/rse/?sr=SEO_GOOGLE" target="_blank">www.premiereclasse.com/fr-fr/rse/?sr=SEO_GOOGLE</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://group.accor.com/fr/group/sustainable-hospitality" target="_blank">group.accor.com/fr/group/sustainable-hospitality</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.goldentulip.com/fr-fr/rse/?sr=SEO_GOOGLE" target="_blank">www.goldentulip.com/fr-fr/rse/?sr=SEO_GOOGLE</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.kyriad.com/fr-fr/rse/?sr=SEO_GOOGLE" target="_blank">www.kyriad.com/fr-fr/rse/?sr=SEO_GOOGLE</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://group.accor.com/fr/search?prod_search_index%5Bquery%5D=" target="_blank">group.accor.com/fr/search?prod_search_index%5Bquery%5D=</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.campanile.com/fr-fr/rse/?sr=SEO_GOOGLE" target="_blank">www.campanile.com/fr-fr/rse/?sr=SEO_GOOGLE</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://careers.accor.com/global/en/accor-at-a-glance" target="_blank">careers.accor.com/global/en/accor-at-a-glance</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://group.accor.com/fr/hotel-development/sustainable-hotel-performance" target="_blank">group.accor.com/fr/hotel-development/sustainable-hotel-performance</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://careers.accor.com/fr/fr/pourquoi-rejoindre-accor" target="_blank">careers.accor.com/fr/fr/pourquoi-rejoindre-accor</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://careers.accor.com/fr/fr/posts" target="_blank">careers.accor.com/fr/fr/posts</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://greet.accor.com/team-building-rse/" target="_blank">greet.accor.com/team-building-rse/</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://greet.accor.com/" target="_blank">greet.accor.com/</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://greet.accor.com/design-ecologique-chez-hotels-greet/" target="_blank">greet.accor.com/design-ecologique-chez-hotels-greet/</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://group.accor.com/fr/brands-and-experiences/our-hotel-brands/greet" target="_blank">group.accor.com/fr/brands-and-experiences/our-hotel-brands/greet</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.louvrehotels.com/fr-fr/nos-engagements/vers-un-tourisme-plus-durable-notre-plan-rse/" target="_blank">www.louvrehotels.com/fr-fr/nos-engagements/vers-un-tourisme-plus-durable-notre-p</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.louvrehotels.com/fr-fr/nos-engagements/" target="_blank">www.louvrehotels.com/fr-fr/nos-engagements/</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.louvrehotels.com/fr-fr/rse/" target="_blank">www.louvrehotels.com/fr-fr/rse/</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.louvrehotels.com/fr-fr/rse/?sr=SEO_GOOGLE" target="_blank">www.louvrehotels.com/fr-fr/rse/?sr=SEO_GOOGLE</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.louvrehotels.com/fr-fr/reinventer/?sr=SEO_GOOGLE" target="_blank">www.louvrehotels.com/fr-fr/reinventer/?sr=SEO_GOOGLE</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://louvrehotelscareers.com/fr/notre-universit-dentreprise" target="_blank">louvrehotelscareers.com/fr/notre-universit-dentreprise</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.groupepvcp.com/groupe/gouvernance/" target="_blank">www.groupepvcp.com/groupe/gouvernance/</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.groupepvcp.com/engagement/" target="_blank">www.groupepvcp.com/engagement/</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.groupepvcp.com/engagement/tourisme-impact-positif/" target="_blank">www.groupepvcp.com/engagement/tourisme-impact-positif/</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://business.groupepvcp.com/fr-fr/responsabilite-sociale-economique_ms" target="_blank">business.groupepvcp.com/fr-fr/responsabilite-sociale-economique_ms</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.groupepvcp.com/groupe/strategie/" target="_blank">www.groupepvcp.com/groupe/strategie/</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.groupepvcp.com/groupe/raison-etre/" target="_blank">www.groupepvcp.com/groupe/raison-etre/</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.groupepvcp.com/talents/" target="_blank">www.groupepvcp.com/talents/</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.adagio-city.com/fr/adagio-et-le-developpement-durable.shtml" target="_blank">www.adagio-city.com/fr/adagio-et-le-developpement-durable.shtml</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.groupepvcp.com/adagio/#les-ambitions" target="_blank">www.groupepvcp.com/adagio/#les-ambitions</a></td>
+  <td><span class="badge badge-error">Empty</span></td>
+  <td>â</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">â</td>
+</tr>
+<tr>
+  <td><a href="https://www.adagio-city.com/fr/recrutement.shtml" target="_blank">www.adagio-city.com/fr/recrutement.shtml</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.adagio-city.com/fr/sobriete-energetique.shtml" target="_blank">www.adagio-city.com/fr/sobriete-energetique.shtml</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.groupepvcp.com/pierre-vacances/#les-ambitions" target="_blank">www.groupepvcp.com/pierre-vacances/#les-ambitions</a></td>
+  <td><span class="badge badge-error">Empty</span></td>
+  <td>â</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">â</td>
+</tr>
+<tr>
+  <td><a href="https://www.pierreetvacances.com/fr-fr/developpement-durable_ms" target="_blank">www.pierreetvacances.com/fr-fr/developpement-durable_ms</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.pierreetvacances.com/be-wl/label-clef-verte_om" target="_blank">www.pierreetvacances.com/be-wl/label-clef-verte_om</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.pierreetvacances.com/gb-en/holiday-sustainability_ms" target="_blank">www.pierreetvacances.com/gb-en/holiday-sustainability_ms</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.groupepvcp.com/maeva/#les-ambitions" target="_blank">www.groupepvcp.com/maeva/#les-ambitions</a></td>
+  <td><span class="badge badge-error">Empty</span></td>
+  <td>â</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">â</td>
+</tr>
+<tr>
+  <td><a href="https://www.maeva.com/fr-fr/vacances-responsables" target="_blank">www.maeva.com/fr-fr/vacances-responsables</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.maeva.com/fr-fr/vacances-responsables/reduire-mon-impact" target="_blank">www.maeva.com/fr-fr/vacances-responsables/reduire-mon-impact</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.maeva.com/fr-fr/vacances-responsables/clorofil-bilan-carbone" target="_blank">www.maeva.com/fr-fr/vacances-responsables/clorofil-bilan-carbone</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.groupepvcp.com/center-parcs/#les-ambitions" target="_blank">www.groupepvcp.com/center-parcs/#les-ambitions</a></td>
+  <td><span class="badge badge-error">Empty</span></td>
+  <td>â</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">â</td>
+</tr>
+<tr>
+  <td><a href="https://www.centerparcs.fr/fr-fr/engagements-rse_ms" target="_blank">www.centerparcs.fr/fr-fr/engagements-rse_ms</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.centerparcs.fr/fr-fr/qui-sommes-nous_sck" target="_blank">www.centerparcs.fr/fr-fr/qui-sommes-nous_sck</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.centerparcs.fr/fr-fr/seminaires_ms" target="_blank">www.centerparcs.fr/fr-fr/seminaires_ms</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.odalys-vacances.com/nos-engagements-tourisme-durable-responsable.html" target="_blank">www.odalys-vacances.com/nos-engagements-tourisme-durable-responsable.html</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.magora.fr/rse/" target="_blank">www.magora.fr/rse/</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.brochuresenligne.com/docs/magora.html" target="_blank">www.brochuresenligne.com/docs/magora.html</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.odalys-vacances.com/charte-verte-vacances.html" target="_blank">www.odalys-vacances.com/charte-verte-vacances.html</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.odalys-vacances.com/residences-labelisees-charte-verte/" target="_blank">www.odalys-vacances.com/residences-labelisees-charte-verte/</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.groupe-reside-etudes.com/communication" target="_blank">www.groupe-reside-etudes.com/communication</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.groupe-reside-etudes.com/finance" target="_blank">www.groupe-reside-etudes.com/finance</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.groupe-reside-etudes.com/groupe/valeurs" target="_blank">www.groupe-reside-etudes.com/groupe/valeurs</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.ihg.com/content/fr/fr/sustainability-low-carbon" target="_blank">www.ihg.com/content/fr/fr/sustainability-low-carbon</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.ihgplc.com/en/responsible-business" target="_blank">www.ihgplc.com/en/responsible-business</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.ihg.com/content/fr/fr/about/corporate-responsibility" target="_blank">www.ihg.com/content/fr/fr/about/corporate-responsibility</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.ihg.com/content/us/en/sustainability-certified-hotels" target="_blank">www.ihg.com/content/us/en/sustainability-certified-hotels</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.ihg.com/content/us/en/sustainability-donate-points" target="_blank">www.ihg.com/content/us/en/sustainability-donate-points</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://development.ihg.com/hotel-development/owner-value/sustainable-business" target="_blank">development.ihg.com/hotel-development/owner-value/sustainable-business</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.ihg.com/content/fr/fr/support/green-engage" target="_blank">www.ihg.com/content/fr/fr/support/green-engage</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.ihg.com/content/fr/fr/meetingsandevents/meeting-for-good?scmisc=WEB-_-6C-_-FR-_-B2B-_-Meetings&Events_-IHGMFGCTA" target="_blank">www.ihg.com/content/fr/fr/meetingsandevents/meeting-for-good?scmisc=WEB-_-6C-_-F</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://careers.ihg.com/fr-fr/" target="_blank">careers.ihg.com/fr-fr/</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://investor.choicehotels.com/esg/governance-documents/default.aspx" target="_blank">investor.choicehotels.com/esg/governance-documents/default.aspx</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://investor.choicehotels.com/esg/esg-documents/default.aspx" target="_blank">investor.choicehotels.com/esg/esg-documents/default.aspx</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.choicehotels.com/fr-ca/about/responsibility" target="_blank">www.choicehotels.com/fr-ca/about/responsibility</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.choicehotels.com/fr-fr/about/responsibility/room-to-be-green" target="_blank">www.choicehotels.com/fr-fr/about/responsibility/room-to-be-green</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.choicehotels.co.uk/corporate-social-responsibility" target="_blank">www.choicehotels.co.uk/corporate-social-responsibility</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://careers.choicehotels.com/" target="_blank">careers.choicehotels.com/</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.balladins.com/fr/engagement-ecologique/" target="_blank">www.balladins.com/fr/engagement-ecologique/</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://tribuca.net/mmv-un-vrai-devoir-dagir-quon-assume-collectivement/" target="_blank">tribuca.net/mmv-un-vrai-devoir-dagir-quon-assume-collectivement/</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+<tr>
+  <td><a href="https://www.lechotouristique.com/article/mmv-fabienne-carrasco-nommee-directrice-generale" target="_blank">www.lechotouristique.com/article/mmv-fabienne-carrasco-nommee-directrice-general</a></td>
+  <td><span class="badge badge-warn">Minimal</span></td>
+  <td>31 chars</td>
+  <td style="font-family:monospace;font-size:11px;color:#8b949e;">31_2712</td>
+</tr>
+</tbody></table>
+</div>
+<h2>ð Content Snapshots (Pages with substantial content)</h2>
+<div class="note">Below are content previews from pages that returned substantial content. These serve as the baseline for future change detection.</div>
+<div class="diff-block">
+<div class="diff-header">
+  <a href="https://www.honotel.com/happyculture/" target="_blank">www.honotel.com/happyculture/</a>
+  <span class="badge badge-new">BASELINE</span>
+</div>
+<div class="diff-body">
+<span class="diff-add">+ Groupe</span>
+<span class="diff-add">+ Gestion hoteliÃ¨re</span>
+<span class="diff-add">+ Investissement</span>
+<span class="diff-add">+ Portfolio</span>
+<span class="diff-add">+ Nos engagements</span>
+<span class="diff-add">+ ActualitÃ©s</span>
+<span class="diff-add">+ FR</span>
+<span class="diff-add">+ Contactez-nous</span>
+<span class="diff-add">+ HappyCulture, notre marque d'hÃ´tels engagÃ©s</span>
+<span class="diff-add">+ </span>
+<span class="diff-add">+ Une famille dâhÃ´tels engagÃ©s</span>
+<span class="diff-add">+ </span>
+<span class="diff-add">+ HappyCulture est une famille dâhÃ´tels qui prend au sÃ©rieux son engagement sociÃ©tal. En hÃ´teliers responsables, nous faisons attention Ã  notre empreinte carbone simplement et Ã  notre Ã©chelle. Nous avons dÃ©ployÃ© un programme RSE ambitieux qui met en place des actions concrÃ¨tes et voulons offrir Ã  nos clients de sÃ©journer avec la c</span>
+<span class="diff-context">... (19561 more characters)</span>
+</div>
+</div>
+<div class="diff-block">
+<div class="diff-header">
+  <a href="https://www.bestwestern.fr/landing_pages/sejour-responsable" target="_blank">www.bestwestern.fr/landing_pages/sejour-responsable</a>
+  <span class="badge badge-new">BASELINE</span>
+</div>
+<div class="diff-body">
+<span class="diff-add">+ Nouveau ! Payez vos sÃ©jours en 3 fois SANS FRAIS dÃ¨s 150â¬ En savoir plus</span>
+<span class="diff-add">+ </span>
+<span class="diff-add">+ Bons plans Destinations ExpÃ©riences SÃ©minaires & Ã©vÃ©nements Programme de fidÃ©litÃ©</span>
+<span class="diff-add">+ Ma rÃ©servation et mes points</span>
+<span class="diff-add">+ </span>
+<span class="diff-add">+ OFFRE DERNIÃRE MINUTE</span>
+<span class="diff-add">+ Besoin d'Ã©vasion ?</span>
+<span class="diff-add">+ </span>
+<span class="diff-add">+ Â </span>
+<span class="diff-add">+ </span>
+<span class="diff-add">+ DÃ©couvrez des centaines de destinations au meilleur prix*</span>
+<span class="diff-add">+ </span>
+<span class="diff-add">+ Â </span>
+<span class="diff-add">+ </span>
+<span class="diff-add">+ Je fonce</span>
+<span class="diff-add">+ </span>
+<span class="diff-add">+ *Offre appliquÃ©e sur les tarifs derniÃ¨re minute</span>
+<span class="diff-add">+ </span>
+<span class="diff-add">+ Destination</span>
+<span class="diff-add">+ Chambre(s) & invitÃ©(s)</span>
+<span class="diff-add">+ Dates</span>
+<span class="diff-add">+ Afficher les tarifs Best Western Rewards</span>
+<span class="diff-add">+ Code Promo </span>
+<span class="diff-add">+ Rechercher</span>
+<span class="diff-add">+ Offres derniÃ¨res minutes Ã  saisir</span>
+<span class="diff-add">+ RÃ©duction</span>
+<span class="diff-context">... (11911 more characters)</span>
+</div>
+</div>
+<div class="diff-block">
+<div class="diff-header">
+  <a href="https://www.pierreval.com/nos-engagements/" target="_blank">www.pierreval.com/nos-engagements/</a>
+  <span class="badge badge-new">BASELINE</span>
+</div>
+<div class="diff-body">
+<span class="diff-add">+ GÃ©rer le consentement</span>
+<span class="diff-add">+ Pour offrir les meilleures expÃ©riences, nous utilisons des technologies telles que les cookies pour stocker et/ou accÃ©der aux informations des appareils. Le fait de consentir Ã  ces technologies nous permettra de traiter des donnÃ©es telles que le comportement de navigation ou les ID uniques sur ce site. Le fait de ne pas consentir ou de retirer son consentement peut avoir un effet nÃ©gatif sur certaines caractÃ©ristiques et fonctions.</span>
+<span class="diff-add">+ Accepter</span>
+<span class="diff-add">+ Refuser</span>
+<span class="diff-add">+ Voir les prÃ©fÃ©rences</span>
+<span class="diff-add">+ DÃ©cl</span>
+<span class="diff-context">... (9285 more characters)</span>
+</div>
+</div>
+<div class="diff-block">
+<div class="diff-header">
+  <a href="https://www.bwhhotels.com/content/bwh-hotels/en_US/about/earth-people-community.html" target="_blank">www.bwhhotels.com/content/bwh-hotels/en_US/about/earth-people-community.html</a>
+  <span class="badge badge-new">BASELINE</span>
+</div>
+<div class="diff-body">
+<span class="diff-add">+ ABOUT BWH HOTELS</span>
+<span class="diff-add">+ Earth. People. Community.</span>
+<span class="diff-add">+ </span>
+<span class="diff-add">+ At BWHÂ® Hotels, we believe we have a shared responsibility to be conscientious stewards within our global community. Through our Earth, People, and Community (âEPCâ) effort, our goal is to strengthen one community at a time by partnering with our hoteliers and providing the necessary tools to enact meaningful change. Our hotel family is deeply committed to implementing environmentally friendly practices, fostering a culture where diversity is celebrate</span>
+<span class="diff-context">... (6690 more characters)</span>
+</div>
+</div>
+<div class="diff-block">
+<div class="diff-header">
+  <a href="https://www.welcometothejungle.com/fr/companies/eklo-hotels/rse" target="_blank">www.welcometothejungle.com/fr/companies/eklo-hotels/rse</a>
+  <span class="badge badge-new">BASELINE</span>
+</div>
+<div class="diff-body">
+<span class="diff-add">+ Blah blah blah Cookie !</span>
+<span class="diff-add">+ </span>
+<span class="diff-add">+ Bon ok, ces cookies ne sont ni sucrÃ©s, ni chocolatÃ©s, ni moelleux.Â </span>
+<span class="diff-add">+ </span>
+<span class="diff-add">+ Ils nous permettent de mieux vous connaÃ®tre et de vous proposer les contenus que vous allez adorer dÃ©vorer. Et Ã§a, Ã§a vaut tous les cookies du monde.</span>
+<span class="diff-add">+ </span>
+<span class="diff-add">+ Pour modifier vos prÃ©fÃ©rences par la suite, cliquez sur le lien 'Gestion des cookies' situÃ© en bas de page.</span>
+<span class="diff-add">+ </span>
+<span class="diff-add">+ Lire la politique de confidentialitÃ©</span>
+<span class="diff-add">+ DÃ©claration de cookies</span>
+<span class="diff-add">+ Voici pourquoi nous utilisons des cookies.</span>
+<span class="diff-add">+ Cookies de fonctionnalitÃ©s et strictement n</span>
+<span class="diff-context">... (4916 more characters)</span>
+</div>
+</div>
+<div class="diff-block">
+<div class="diff-header">
+  <a href="https://www.bestwestern.fr/market-sobriete.jsp" target="_blank">www.bestwestern.fr/market-sobriete.jsp</a>
+  <span class="badge badge-new">BASELINE</span>
+</div>
+<div class="diff-body">
+<span class="diff-add">+ Nouveau ! Payez vos sÃ©jours en 3 fois SANS FRAIS dÃ¨s 150â¬ En savoir plus</span>
+<span class="diff-add">+ </span>
+<span class="diff-add">+ Bons plans Destinations ExpÃ©riences SÃ©minaires & Ã©vÃ©nements Programme de fidÃ©litÃ©</span>
+<span class="diff-add">+ Ma rÃ©servation et mes points</span>
+<span class="diff-add">+ Accueil</span>
+<span class="diff-add">+ SobriÃ©tÃ© Ã©nergÃ©tique</span>
+<span class="diff-add">+ SobriÃ©tÃ© Ã©nergÃ©tique</span>
+<span class="diff-add">+ </span>
+<span class="diff-add">+ Profitez au maximum de votre sÃ©jour grÃ¢ce Ã  notre application Best Western e-ConciergerieÂ®</span>
+<span class="diff-add">+ </span>
+<span class="diff-add">+ Limitons nos consommations d'Ã©nergies</span>
+<span class="diff-add">+ </span>
+<span class="diff-add">+ Afin de rÃ©pondre Ã  l'appel collectif pour la sobriÃ©tÃ© Ã©nergÃ©tique, le groupe Best WesternÂ® Hotels & Resorts renforce sa politique de </span>
+<span class="diff-context">... (4835 more characters)</span>
+</div>
+</div>
+<div class="diff-block">
+<div class="diff-header">
+  <a href="https://www.bestwestern.com/fr_FR/about/better-world.html" target="_blank">www.bestwestern.com/fr_FR/about/better-world.html</a>
+  <span class="badge badge-new">BASELINE</span>
+</div>
+<div class="diff-body">
+<span class="diff-add">+ COMPTE</span>
+<span class="diff-add">+ </span>
+<span class="diff-add">+ Pour une expÃ©rience optimale, veuillez vous connecter</span>
+<span class="diff-add">+ </span>
+<span class="diff-add">+ SE CONNECTER</span>
+<span class="diff-add">+ S'INSCRIRE</span>
+<span class="diff-add">+ BEST WESTERN REWARDS</span>
+<span class="diff-add">+ OFFRES</span>
+<span class="diff-add">+ SERVICE CLIENT</span>
+<span class="diff-add">+ NOS MARQUES</span>
+<span class="diff-add">+ MES RÃSERVATIONS</span>
+<span class="diff-add">+ FRANÃAIS </span>
+<span class="diff-add">+ </span>
+<span class="diff-add">+ </span>
+<span class="diff-add">+ AccueilÂ &gt; Qui sommes-nous?Â &gt; Best Western For a Better World</span>
+<span class="diff-add">+ </span>
+<span class="diff-add">+ </span>
+<span class="diff-add">+  </span>
+<span class="diff-add">+ Apprendre. Aimer. Aider. Donner.</span>
+<span class="diff-add">+ Adoptez un esprit d'entraide</span>
+<span class="diff-add">+ </span>
+<span class="diff-add">+ Avec 19Â marques et prÃ¨s de 4Â 300â Â hÃ´tels dans plus de 100â Â pays et territoires Ã  travers le monde, Best WesternÂ®Â Hotels & Resorts accueille chaque jour d'innombrables clients. C'est notre esprit d'entr</span>
+<span class="diff-context">... (2758 more characters)</span>
+</div>
+</div>
+<div class="diff-block">
+<div class="diff-header">
+  <a href="https://www.pierreval.com/le-groupe-pierreval/nous-rejoindre/" target="_blank">www.pierreval.com/le-groupe-pierreval/nous-rejoindre/</a>
+  <span class="badge badge-new">BASELINE</span>
+</div>
+<div class="diff-body">
+<span class="diff-add">+ GÃ©rer le consentement</span>
+<span class="diff-add">+ Pour offrir les meilleures expÃ©riences, nous utilisons des technologies telles que les cookies pour stocker et/ou accÃ©der aux informations des appareils. Le fait de consentir Ã  ces technologies nous permettra de traiter des donnÃ©es telles que le comportement de navigation ou les ID uniques sur ce site. Le fait de ne pas consentir ou de retirer son consentement peut avoir un effet nÃ©gatif sur certaines caractÃ©ristiques et fonctions.</span>
+<span class="diff-add">+ Accepter</span>
+<span class="diff-add">+ Refuser</span>
+<span class="diff-add">+ Voir les prÃ©fÃ©rences</span>
+<span class="diff-add">+ DÃ©cl</span>
+<span class="diff-context">... (1991 more characters)</span>
+</div>
+</div>
+<div class="diff-block">
+<div class="diff-header">
+  <a href="https://www.eklohotels.com/fr/ekloresponsable" target="_blank">www.eklohotels.com/fr/ekloresponsable</a>
+  <span class="badge badge-new">BASELINE</span>
+</div>
+<div class="diff-body">
+<span class="diff-add">+ Your destination</span>
+<span class="diff-add">+ Nantes</span>
+<span class="diff-add">+ Paris Expo</span>
+<span class="diff-add">+ Roissy</span>
+<span class="diff-add">+ Marne-la-VallÃ©e</span>
+<span class="diff-add">+ Montpellier</span>
+<span class="diff-add">+ Bordeaux</span>
+<span class="diff-add">+ Toulouse</span>
+<span class="diff-add">+ Lyon</span>
+<span class="diff-add">+ Lille</span>
+<span class="diff-add">+ Clermont-Ferrand</span>
+<span class="diff-add">+ SLEEP</span>
+<span class="diff-add">+ DRINK & EAT</span>
+<span class="diff-add">+ GROUPS & PRIVATIZATIONS</span>
+<span class="diff-add">+ ENJOY</span>
+<span class="diff-add">+ SPECIAL OFFERS</span>
+<span class="diff-add">+ BOOK</span>
+<span class="diff-add">+ En</span>
+<span class="diff-add">+ Fr</span>
+<span class="diff-add">+ JOBS</span>
+<span class="diff-add">+ DEVELOPMENT</span>
+<span class="diff-add">+ EKLORESPONSIBLE</span>
+<span class="diff-add">+ PRESS</span>
+<span class="diff-add">+ NEWS</span>
+<span class="diff-add">+ SLEEP</span>
+<span class="diff-add">+ DRINK & EAT</span>
+<span class="diff-add">+ GROUPS & PRIVATIZATIONS</span>
+<span class="diff-add">+ ENJOY</span>
+<span class="diff-add">+ SPECIAL OFFERS</span>
+<span class="diff-add">+ JOBS</span>
+<span class="diff-add">+ DEVELOPMENT</span>
+<span class="diff-add">+ EKLORESPONSIBLE</span>
+<span class="diff-add">+ PRESS</span>
+<span class="diff-add">+ NEWS</span>
+<span class="diff-add">+ Page not found</span>
+<span class="diff-add">+ </span>
+<span class="diff-add">+ This page doesn't exist</span>
+<span class="diff-add">+ </span>
+<span class="diff-add">+ RETURN TO HOME PAGE</span>
+<span class="diff-add">+ Stay in</span>
+<span class="diff-add">+ touch</span>
+<span class="diff-add">+ </span>
+<span class="diff-add">+ Newsletter sign-up</span>
+<span class="diff-add">+ </span>
+<span class="diff-add">+ SUBSCRIBE</span>
+<span class="diff-add">+ FAQ</span>
+<span class="diff-add">+ Sitemap</span>
+<span class="diff-add">+ General terms & conditions</span>
+<span class="diff-add">+ Privacy Policy</span>
+<span class="diff-context">... (150 more characters)</span>
+</div>
+</div>
+<div class="diff-block">
+<div class="diff-header">
+  <a href="https://www.eklohotels.com/fr/recrutement" target="_blank">www.eklohotels.com/fr/recrutement</a>
+  <span class="badge badge-new">BASELINE</span>
+</div>
+<div class="diff-body">
+<span class="diff-add">+ Your destination</span>
+<span class="diff-add">+ Nantes</span>
+<span class="diff-add">+ Paris Expo</span>
+<span class="diff-add">+ Roissy</span>
+<span class="diff-add">+ Marne-la-VallÃ©e</span>
+<span class="diff-add">+ Montpellier</span>
+<span class="diff-add">+ Bordeaux</span>
+<span class="diff-add">+ Toulouse</span>
+<span class="diff-add">+ Lyon</span>
+<span class="diff-add">+ Lille</span>
+<span class="diff-add">+ Clermont-Ferrand</span>
+<span class="diff-add">+ SLEEP</span>
+<span class="diff-add">+ DRINK & EAT</span>
+<span class="diff-add">+ GROUPS & PRIVATIZATIONS</span>
+<span class="diff-add">+ ENJOY</span>
+<span class="diff-add">+ SPECIAL OFFERS</span>
+<span class="diff-add">+ BOOK</span>
+<span class="diff-add">+ En</span>
+<span class="diff-add">+ Fr</span>
+<span class="diff-add">+ JOBS</span>
+<span class="diff-add">+ DEVELOPMENT</span>
+<span class="diff-add">+ EKLORESPONSIBLE</span>
+<span class="diff-add">+ PRESS</span>
+<span class="diff-add">+ NEWS</span>
+<span class="diff-add">+ SLEEP</span>
+<span class="diff-add">+ DRINK & EAT</span>
+<span class="diff-add">+ GROUPS & PRIVATIZATIONS</span>
+<span class="diff-add">+ ENJOY</span>
+<span class="diff-add">+ SPECIAL OFFERS</span>
+<span class="diff-add">+ JOBS</span>
+<span class="diff-add">+ DEVELOPMENT</span>
+<span class="diff-add">+ EKLORESPONSIBLE</span>
+<span class="diff-add">+ PRESS</span>
+<span class="diff-add">+ NEWS</span>
+<span class="diff-add">+ Page not found</span>
+<span class="diff-add">+ </span>
+<span class="diff-add">+ This page doesn't exist</span>
+<span class="diff-add">+ </span>
+<span class="diff-add">+ RETURN TO HOME PAGE</span>
+<span class="diff-add">+ Stay in</span>
+<span class="diff-add">+ touch</span>
+<span class="diff-add">+ </span>
+<span class="diff-add">+ Newsletter sign-up</span>
+<span class="diff-add">+ </span>
+<span class="diff-add">+ SUBSCRIBE</span>
+<span class="diff-add">+ FAQ</span>
+<span class="diff-add">+ Sitemap</span>
+<span class="diff-add">+ General terms & conditions</span>
+<span class="diff-add">+ Privacy Policy</span>
+<span class="diff-context">... (150 more characters)</span>
+</div>
+</div>
+
+</div>
+</body>
+</html>
